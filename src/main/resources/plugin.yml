@@ -1,0 +1,6 @@
+name: itemsGlowing
+version: '${version}'
+main: net.stockholm.itemsglowing.Main
+author: stockholm
+website: https://stock69holm.github.io/stockholm-dev
+api-version: '1.20'

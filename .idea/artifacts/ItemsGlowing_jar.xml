@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ItemsGlowing:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ItemsGlowing_jar</output-path>
+    <root id="archive" name="ItemsGlowing.jar">
+      <element id="module-output" name="ItemsGlowing.main" />
+    </root>
+  </artifact>
+</component>
