@@ -88,7 +88,7 @@ public class ItemManagerImpl implements ItemManager {
     @Override
     public boolean isLocationSane(org.bukkit.entity.Item item, int radius) {
         Block targetBlock = player.getTargetBlockExact(radius);
-        return targetBlock != null && item.getLocation().distanceSquared(targetBlock.getLocation()) <= 2;
+        return targetBlock != null && item.getLocation().distanceSquared(targetBlock.getLocation()) <= Settings.PICKUP_DISTANCE;
     }
 
     @Override
@@ -108,6 +108,7 @@ public class ItemManagerImpl implements ItemManager {
 
         if (unite(itemStack)) {
             glowingItem.remove();
+            soundManager.activateSound(Settings.PICKUP_SOUND);
             ItemData.glowingItem.put(player, null);
             return true;
         }
@@ -141,7 +142,6 @@ public class ItemManagerImpl implements ItemManager {
                     itemStack.setAmount(itemStack.getAmount() - freeSpace);
                     slotItem.setAmount(slotItem.getMaxStackSize());
                 }
-                soundManager.activateSound(Settings.PICKUP_SOUND);
                 return true;
             }
         }
