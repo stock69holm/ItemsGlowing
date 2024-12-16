@@ -16,19 +16,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-public class ItemManagerImpl implements ItemManager {
+public class Item implements ItemManager {
+    public static final Map<Player, Item> itemManagerMap = new HashMap<>();
+
     Player player;
     PlayerInventory inventory;
     ServerPlayer serverPlayer;
     SoundManager soundManager;
 
-    public ItemManagerImpl(Player viewer) {
+    public Item(Player viewer) {
         this.player = viewer;
         this.inventory = player.getInventory();
         this.serverPlayer = NMS.applyNmsPlayer(viewer);
         this.soundManager = new SoundManagerImpl(player);
+
+        itemManagerMap.put(viewer, this);
     }
 
     @Override
@@ -103,6 +109,7 @@ public class ItemManagerImpl implements ItemManager {
         if (addToEmptySlot(itemStack)) {
             glowingItem.remove();
             ItemData.glowingItem.put(player, null);
+            soundManager.activateSound(Settings.PICKUP_SOUND);
             return true;
         }
 
@@ -146,5 +153,9 @@ public class ItemManagerImpl implements ItemManager {
             }
         }
         return false;
+    }
+
+    public static Item getItemManager(Player player) {
+        return itemManagerMap.containsKey(player) ? itemManagerMap.get(player) : new Item(player);
     }
 }
